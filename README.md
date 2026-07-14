@@ -5,9 +5,9 @@ Multi-agent AI automation platform that generates professional emails for 4 depa
 ## Why Groq?
 | | Groq (Llama 3.1) | Gemini 1.5 Flash | GPT-4o-mini |
 |---|---|---|---|
-| Free tier | ✅ Yes | ✅ Yes (limited) | ❌ No |
+| Free tier | Yes | Yes (limited) | No |
 | Daily limit | 14,400 requests | Quota exhausts fast | Paid only |
-| Speed | ⚡ Fastest (LPU) | Fast | Fast |
+| Speed | Fastest (LPU) | Fast | Fast |
 | Setup | API key only | Google account + project | OpenAI account |
 
 ## Departments
