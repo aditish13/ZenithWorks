@@ -1,31 +1,43 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
+# Install build deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc && rm -rf /var/lib/apt/lists/*
+    gcc curl && \
+    rm -rf /var/lib/apt/lists/*
 
+# Install Python deps
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    apt-get purge -y gcc && apt-get autoremove -y
 
+# Copy app
 COPY app.py .
 COPY templates/ templates/
 
+# Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
+# Env vars
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV PORT=8080
 
-EXPOSE 8080
+# Let platform decide PORT (Render sets it automatically)
+ENV PORT=10000
 
+EXPOSE 10000
+
+# Healthcheck (doesn't depend on /health route)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
+  CMD curl -f http://localhost:$PORT/ || exit 1
 
+# Start app (force correct port binding)
 CMD gunicorn app:app \
-    --bind 0.0.0.0:$PORT \
-    --workers 2 \
+    --bind 0.0.0.0:${PORT} \
+    --workers 1 \
+    --threads 2 \
     --timeout 180 \
     --access-logfile - \
     --error-logfile - \

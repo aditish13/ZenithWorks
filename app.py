@@ -37,7 +37,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Flask
+# ── Flask ─────────────────────────────────────
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "zenithworks-secret")
 CORS(app)
