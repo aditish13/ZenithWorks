@@ -148,7 +148,3 @@ Sheet tabs auto-logged:
 - `HR_Outputs`, `CS_Outputs`, `Marketing_Outputs`, `Accounting_Outputs`
 - `HR_Batch`, `CS_Batch`, `Marketing_Batch`, `Accounting_Batch`
 
-## Output Screenshot
-
-Here’s a preview of the ZenithWorks AI Employees interface:
-<img width="1919" height="866" alt="image" src="https://github.com/user-attachments/assets/af0993d9-720f-46f9-aa7d-175213fabbcb" />
