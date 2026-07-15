@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <title>AI Employee Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -147,7 +147,18 @@
   .toggle-knob svg{width:9px;height:9px;color:#1a1204;}
   [data-theme="light"] .toggle-knob{transform:translateX(18px);}
 
-  main.main{flex:1; display:flex; flex-direction:column; position:relative; z-index:3; overflow:hidden;}
+  main.main{flex:1; display:flex; flex-direction:column; position:relative; z-index:3; overflow:hidden; min-width:0;}
+
+  .mobile-brand{display:none; align-items:center; gap:9px; margin-right:4px;}
+  .mobile-brand .brand-mark{width:28px;height:28px;font-size:0.82rem;border-radius:7px;}
+
+  .mobile-menu-btn{
+    display:none; align-items:center; justify-content:center;
+    width:34px;height:34px; border-radius:7px; border:1px solid var(--hairline);
+    background:transparent; color:var(--ivory-dim); cursor:pointer; flex-shrink:0;
+    margin-right:2px;
+  }
+  .mobile-menu-btn svg{width:16px;height:16px;}
 
   .topbar{
     height:60px; min-height:60px; display:flex; align-items:center; gap:12px; padding:0 34px;
@@ -164,13 +175,14 @@
   .back-btn:hover{background:rgba(255,255,255,0.04); color:var(--brass-hi);}
   .back-btn svg{width:15px;height:15px;}
   .back-btn.visible{display:inline-flex;}
-  .topbar-title{font-family:var(--f-display); font-weight:500; font-size:1rem; letter-spacing:0.2px;}
-  .topbar-divider{width:1px;height:14px;background:var(--hairline2);}
-  .topbar-sub{font-size:0.78rem; color:var(--muted);}
-  .topbar-right{margin-left:auto;}
+  .topbar-title{font-family:var(--f-display); font-weight:500; font-size:1rem; letter-spacing:0.2px; white-space:nowrap;}
+  .topbar-divider{width:1px;height:14px;background:var(--hairline2); flex-shrink:0;}
+  .topbar-sub{font-size:0.78rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .topbar-right{margin-left:auto; display:flex; align-items:center; flex-shrink:0;}
   .topbar-tag{
     font-family:var(--f-mono); font-size:0.64rem; color:var(--brass);
     border:1px solid var(--hairline2); border-radius:3px; padding:4px 10px; letter-spacing:0.5px;
+    white-space:nowrap;
   }
 
   .quick-switch{display:none; align-items:center; gap:6px; margin-right:14px;}
@@ -196,8 +208,8 @@
   .eyebrow::before{content:'';width:16px;height:1px;background:var(--brass);}
 
   #landing h2{
-    font-family:var(--f-display); font-weight:600; font-size:clamp(2.4rem, 5vw, 4rem);
-    line-height:1.05; letter-spacing:-1px; color:var(--ivory); max-width:640px;
+    font-family:var(--f-display); font-weight:600; font-size:clamp(2.1rem, 7vw, 4rem);
+    line-height:1.08; letter-spacing:-1px; color:var(--ivory); max-width:640px;
   }
   #landing h2 em{
     font-style:italic; font-weight:400;
@@ -213,6 +225,7 @@
     transition:border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   }
   .dept-card:hover{border-color:var(--hairline2); transform:translateY(-3px); box-shadow:0 14px 30px rgba(0,0,0,0.35);}
+  .dept-card:active{transform:translateY(0); box-shadow:none;}
 
   .card-icon{width:44px;height:44px; border-radius:10px; margin-bottom:16px; display:flex; align-items:center; justify-content:center;}
   .card-icon svg{width:21px;height:21px;}
@@ -248,7 +261,7 @@
   }
   .field input, .field select, .field textarea{
     width:100%; background:rgba(255,255,255,0.02); border:1px solid var(--hairline); border-radius:6px;
-    padding:11px 13px; color:var(--ivory); font-family:var(--f-body); font-size:0.875rem; outline:none;
+    padding:11px 13px; color:var(--ivory); font-family:var(--f-body); font-size:16px; outline:none;
     transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
   }
   .field input:hover, .field select:hover, .field textarea:hover{border-color:var(--hairline2);}
@@ -265,7 +278,7 @@
     border:1px solid var(--hairline); border-radius:6px; padding:11px 13px; cursor:pointer;
   }
   .email-toggle-row label{font-size:0.83rem; color:var(--ivory-dim); margin:0; text-transform:none; letter-spacing:0; font-weight:400; cursor:pointer;}
-  .email-toggle-row input[type="checkbox"]{width:15px;height:15px;accent-color:var(--brass);cursor:pointer;}
+  .email-toggle-row input[type="checkbox"]{width:15px;height:15px;accent-color:var(--brass);cursor:pointer;flex-shrink:0;}
   #email-field{margin-top:10px;}
 
   .btn-generate{
@@ -321,21 +334,84 @@
   .status-pill.success{background:rgba(111,207,151,0.1); color:var(--ok); border:1px solid rgba(111,207,151,0.25);}
   .status-pill.error{background:rgba(226,104,95,0.1); color:var(--bad); border:1px solid rgba(226,104,95,0.25);}
 
+  .sidebar-scrim{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:4; backdrop-filter:blur(2px);}
+  .sidebar-scrim.visible{display:block;}
+
+  /* ===== Tablet / narrow desktop ===== */
   @media (max-width: 980px){
     .dept-cards{grid-template-columns:repeat(2,1fr);}
     #form-view{flex-direction:column;}
     .form-panel{max-width:100%;}
     .output-box{height:60vh;}
+    .topbar-tag{display:none;}
   }
-  @media (max-width: 680px){
-    aside.sidebar{width:76px; min-width:76px;}
-    .brand-text, .sidebar-info, .sidebar-footer span{display:none;}
+
+  /* ===== Tablet / small sidebar collapse ===== */
+  @media (max-width: 760px){
+    aside.sidebar{
+      position:fixed; top:0; left:0; bottom:0; z-index:5;
+      width:250px; min-width:250px;
+      transform:translateX(-100%);
+      transition:transform 0.28s ease;
+      box-shadow:0 0 40px rgba(0,0,0,0.5);
+    }
+    aside.sidebar.open{transform:translateX(0);}
+    .mobile-menu-btn{display:flex;}
+    .mobile-brand{display:flex;}
+    body[data-theme] main.main{width:100%;}
+  }
+
+  /* ===== Phones ===== */
+  @media (max-width: 600px){
+    body{overflow:auto; height:auto; min-height:100%;}
+    html{overflow:auto;}
+    main.main{overflow:visible;}
+    .content{overflow-y:visible;}
+
+    .topbar{padding:0 14px; gap:8px; height:54px; min-height:54px; position:sticky; top:0; background:var(--void); z-index:2;}
+    .topbar-sub{display:none;}
+    .topbar-divider{display:none;}
+    .topbar-title{font-size:0.9rem;}
+    .back-btn{padding:5px 8px 5px 4px; margin-left:0;}
+    .back-btn span{display:none;}
+
+    .quick-switch{margin-right:6px; gap:3px;}
+    .qs-btn{width:30px;height:30px;}
+
+    #landing{padding:5vw 5vw 8vw; gap:12px; min-height:calc(100vh - 54px);}
+    #landing h2{font-size:2rem; letter-spacing:-0.5px;}
+    #landing > p.lede{font-size:0.9rem;}
+
+    .dept-cards{grid-template-columns:1fr; margin-top:22px; gap:10px; max-width:100%;}
+    .dept-card{padding:18px 16px; display:flex; align-items:center; gap:14px;}
+    .card-icon{margin-bottom:0; flex-shrink:0;}
+    .dept-card h3{margin-bottom:2px;}
+
+    #form-view{padding:18px 16px 90px; gap:22px;}
+    .form-header{gap:12px; margin-bottom:18px;}
+    .form-icon{width:40px;height:40px;}
+    .form-panel h2{font-size:1.28rem;}
+
+    .field-row{grid-template-columns:1fr; gap:0;}
+
+    .output-panel{position:static;}
+    .output-box{height:56vh; min-height:320px; box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+    .output-body{padding:18px 16px; font-size:0.9rem;}
+
+    .btn-generate{padding:15px; font-size:1rem;}
+  }
+
+  @media (max-width: 380px){
+    .dept-card{padding:16px 14px;}
+    #landing h2{font-size:1.75rem;}
   }
 </style>
 </head>
 <body>
 
-<aside class="sidebar">
+<div class="sidebar-scrim" id="sidebar-scrim" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
   <div class="brand-block">
     <div class="brand-row" onclick="goHome()">
       <div class="brand-mark">Z</div>
@@ -366,9 +442,15 @@
 <main class="main">
 
   <div class="topbar">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="openSidebar()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="mobile-brand" onclick="goHome()">
+      <div class="brand-mark">Z</div>
+    </div>
     <div class="back-btn" id="back-btn" onclick="goHome()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Home
+      <span>Home</span>
     </div>
     <span class="topbar-title" id="topbar-title">Dashboard</span>
     <div class="topbar-divider"></div>
@@ -394,23 +476,31 @@
       <div class="dept-cards">
         <div class="dept-card" data-d="hr" onclick="openDept('hr')">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <h3>Human Resources</h3>
-          <p>Warm onboarding emails that welcome new hires from day one.</p>
+          <div>
+            <h3>Human Resources</h3>
+            <p>Warm onboarding emails that welcome new hires from day one.</p>
+          </div>
         </div>
         <div class="dept-card" data-d="customer-service" onclick="openDept('customer-service')">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
-          <h3>Customer Service</h3>
-          <p>Empathetic support responses, matched to issue priority.</p>
+          <div>
+            <h3>Customer Service</h3>
+            <p>Empathetic support responses, matched to issue priority.</p>
+          </div>
         </div>
         <div class="dept-card" data-d="marketing" onclick="openDept('marketing')">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
-          <h3>Marketing</h3>
-          <p>High-converting campaign emails with a strong call to action.</p>
+          <div>
+            <h3>Marketing</h3>
+            <p>High-converting campaign emails with a strong call to action.</p>
+          </div>
         </div>
         <div class="dept-card" data-d="accounting" onclick="openDept('accounting')">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 11h3"/></svg></div>
-          <h3>Accounting</h3>
-          <p>Professional, courteous invoice and payment reminders.</p>
+          <div>
+            <h3>Accounting</h3>
+            <p>Professional, courteous invoice and payment reminders.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -554,6 +644,15 @@
   }
   applyTheme('dark');
 
+  function openSidebar(){
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebar-scrim').classList.add('visible');
+  }
+  function closeSidebar(){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-scrim').classList.remove('visible');
+  }
+
   let currentDept = null;
 
   function renderDept(dept){
@@ -588,6 +687,8 @@
     const fv = document.getElementById('form-view');
     fv.style.display = 'flex';
     fv.classList.add('visible');
+
+    closeSidebar();
   }
 
   function renderHome(){
@@ -601,6 +702,8 @@
     document.getElementById('form-view').style.display = 'none';
     document.getElementById('form-view').classList.remove('visible');
     document.getElementById('landing').style.display = 'flex';
+
+    closeSidebar();
   }
 
   function openDept(dept, pushHistory = true){
@@ -684,6 +787,7 @@
         const lat = data.latency_ms ? ` · ${(data.latency_ms/1000).toFixed(1)}s` : '';
         const sent = data.email_sent ? ' · Sent' : '';
         document.getElementById('output-status-label').innerHTML = `<span class="status-pill success">Done${lat}${sent}</span>`;
+        document.getElementById('output-body').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
         document.getElementById('output-body').textContent = 'Error: ' + (data.error || 'Unknown error');
         document.getElementById('output-status-label').innerHTML = `<span class="status-pill error">Failed</span>`;
